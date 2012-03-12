@@ -17,7 +17,7 @@ $.fn.setRotation = function(degrees) {
 $.fn.wheelgame = function(settings) {
 	settings = $.extend({
 		shuffle: false,
-		colors: ['yellow', 'green', 'blue', 'orange', 'gray', 'white', 'red', 'pink', 'aqua'],
+		colors: ["#B8D430", "#3AB745", "#029990", "#3501CB", "#2E2C75", "#673A7E", "#CC0071", "#F80120", "#F35B20", "#FB9A00", "#FFCC00", "#FEF200"],
 		borderColor: 'black',
 		fps: 30,
 		smoothFrames: 10,
@@ -37,7 +37,7 @@ $.fn.wheelgame = function(settings) {
 	// Hide parent DIV and create our canvas
 	this.hide();
 	var size = {width: this.width(), height: this.height()};
-	var center = new Point(size.width / 2, size.height / 2);
+	var center = new Point(Math.round(size.width / 2), Math.round(size.height / 2));
 	//var center = {x: size.width / 2, y: size.height / 2};
 	var radius = ((size.width > size.height ? size.height : size.width) / 2) * 0.9;
 	this.after('<canvas id="wheelgame_canvas" width="' + size.width + '" height="' + size.height + '"></canvas>');
@@ -72,7 +72,7 @@ $.fn.wheelgame = function(settings) {
 		canvas.width = canvas.width; // clear canvas
 		context.strokeStyle = settings.borderColor;
 		context.fillStyle = 'white';
-		context.lineWidth = 3;
+		context.lineWidth = 1;
 		
 		var degPerSlice = 360 / slices.length;
 		var deg = offsetDegrees || 0;
@@ -114,8 +114,15 @@ $.fn.wheelgame = function(settings) {
 		context.fill();
 		context.closePath();
 		
-		// Draw text
-		context.fillStyle = 'black';
+		// Draw text, choose colour based on Perceptive Luminance (http://stackoverflow.com/questions/1855884/determine-font-color-based-on-background-color)
+		tmpcolor = fillStyle.match(/^#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/);
+		tmpcolorlum = (1 - ( 0.299 * (parseInt(tmpcolor[1], 16)/255) + 0.587 * (parseInt(tmpcolor[2], 16)/255) + 0.114 * (parseInt(tmpcolor[3], 16)/255)/255));
+		if(tmpcolorlum < 0.5) {
+			context.fillStyle = 'black';
+		}
+		else {
+			context.fillStyle = 'white';
+		}
 		var sliceCenterRads = degToRad(offsetDegrees + (sizeDegrees / 2));
 		var sliceCenterX = (radius * 0.7) * Math.cos(sliceCenterRads);
 		var sliceCenterY = (radius * 0.7) * Math.sin(sliceCenterRads);
@@ -155,6 +162,11 @@ $.fn.wheelgame = function(settings) {
 		var oldWheelAngle = wheelAngle;
 		velocity -= (velocity * decayFactor * tDiff);
 		wheelAngle = (3600 + angleChange + wheelAngle) % 360;
+
+
+		$("#debugangle").text(velocity);
+
+
 		drawWheel(wheelAngle);
 		lastFrameTime = currTime;
 		if (Math.abs(velocity) > 1.0) {
@@ -187,7 +199,7 @@ $.fn.wheelgame = function(settings) {
 		}
 	};
 	
-	$(canvas).mousedown(function(e) {
+	$(canvas).bind("mousedown touchstart", function(e) {
 		var mousePoint = new Point(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
 		var pointFromCenter = new Point(mousePoint.x - center.x, mousePoint.y - center.y);
 
@@ -200,7 +212,7 @@ $.fn.wheelgame = function(settings) {
 		dragAngleOffset = (360 + dragLastAngle - wheelAngle) % 360;
 	});
 	
-	$(canvas).mouseup(function(e) {
+	$(canvas).bind("mouseup touchend",function(e) {
 		if (!dragging) {
 			return;
 		}
@@ -220,13 +232,13 @@ $.fn.wheelgame = function(settings) {
 		if (Math.abs(currVelocity) > 1) {
 			// Start animation
 			console.log('Throwing with velocity ' + currVelocity);
-			velocity = currVelocity;
+			velocity = -currVelocity; // Needs to be negative on touch devices. Why?
 			animating = true;
 			animateFrame();
 		}
 	});
 	
-	$(canvas).mousemove(function(e) {
+	$(canvas).bind("mousemove touchmove",function(e) {
 		if (!dragging) {
 			return;
 		}
@@ -257,6 +269,15 @@ $.fn.wheelgame = function(settings) {
 			slice.url = $(this).find('a').attr('href');
 		}
 		slices.push(slice);
+	});
+
+
+	$('#addbtn').bind("mouseup touchend",function() {
+		slices.push({url: null, name: $('#addnewtext').val()});
+		if (settings.shuffle) {
+			shuffle(slices);
+		}
+		drawWheel(wheelAngle);
 	});
 	
 	if (settings.shuffle) {

@@ -3,23 +3,26 @@
 <head> 
 	<title>wheel game</title> 
 	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
-	<script type="text/javascript" src="jquery-1.4.2.js"></script> 
+	<script type="text/javascript" src="jquery-1.7.1.js"></script> 
 	<script type="text/javascript" src="jquery.wheelgame.js"></script> 
 	<script>
 	$(document).ready(function() {
 		var wheelgame = $('#container').wheelgame({
 			shuffle: true,
 			update: function(slice) {
-				console.log('update');
+				/*console.log('update');*/
 				$('#sel_value').text(slice.name);
 			},
 			finished: function(slice) {
 				$('#sel_value').text(slice.name + ' (finished)');
 			}
 		});
-		$('#spinbtn').click(function() {
+		$('#spinbtn').bind("mouseup touchend",function() {
 			wheelgame.spin();
 		});
+		$("body").bind("touchstart", function(e){return false;});
+		$("body").bind("touchmove", function(e){return false;});
+		$("body").bind("touchend", function(e){return false;});
 	});
 	</script>
 	<style>
@@ -33,19 +36,23 @@
 	</style>
 </head> 
 <body>
-
-	<h1>test</h1>
-	
-	<div id="container" style="border-style: solid; border-width: 2px; border-color: red">
-		<div><a href="http://www.google.com/">Number One</a></div>
-		<div>Number Two</div>
-		<div>Number Three</div>
-		<div>Number Four</div>
-	</div>
 	
 	<form onsubmit="return false;">
 		<input type="submit" name="spin" id="spinbtn" value="Spin!" />
+		<input type="text" name="addnewtext" id="addnewtext" width="50" value="test" />
+		<input type="submit" name="add" id="addbtn" value="Add!" /><span id="debugangle"></span>
 	</form>
-	<p>Wheel sez: <span id="sel_value"></span></p>
+	<p>Wheel Says: <span id="sel_value"></span></p>
+	
+	<div id="container" style="border-style: solid; border-width: 2px; border-color: red">
+		<div>Melbourne Breakfast</div>
+		<div>French Earl Grey</div>
+		<div>Buddha's Tears</div>
+		<div>Perth Breakfast</div>
+		<div>Tea Five</div>
+		<div>Irish Breakfast</div>
+		<div>Afternoon Tea</div>
+		<div>Snow Dragon</div>
+	</div>
 </body> 
 </html>
