@@ -2,7 +2,7 @@
 <head>
 	<title>Tea Wheel</title>
 	<link type="text/css" rel="stylesheet" href="style.css" />
-	<script type="text/javascript" src="jquery-1.4.2.js"></script>
+	<script type="text/javascript" src="jquery-1.7.1.js"></script>
 	<script type="text/javascript" src="jquery.wheelgame.js"></script>
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -21,9 +21,7 @@
 			$('#spinbtn').bind("click",function() {
 				wheelgame.spin();
 			});
-			$("#wheelgame_canvas").bind("touchstart", function(e){return false;});
-			$("#wheelgame_canvas").bind("touchmove", function(e){return false;});
-			$("#wheelgame_canvas").bind("touchend", function(e){return false;});
+			$("body").bind("touchmove", function(e){return false;});
 		});
 	</script>
 </head> 
@@ -33,16 +31,20 @@
 		<form onsubmit="return false;">
 			<input type="submit" name="spin" id="spinbtn" value="Spin the wheel" /><br/>
 		</form>
-		<p id="currentvelocity">Current Velocity: <span id="debugangle"></span></p>
 		<p id="selectedvalue">Wheel says: <span id="sel_value"></span></p>
 	</div>
 	
 	<div id="container" style="border-style: solid; border-width: 2px; border-color: red">
 		<div>Melbourne Breakfast</div>
-		<div>French Earl Grey</div>
-		<div>Buddha's Tears</div>
 		<div>Perth Breakfast</div>
 		<div>Irish Breakfast</div>
+		<div>Arctic Fire</div>
+		<div>Chocolate</div>
+		<div>Monk Pear</div>
+		<div>Cr&#232;me Br&#251;l&#233;e</div>
+		<div>Special B</div>
+		<div>French Earl Grey</div>
+		<div>Buddha's Tears</div>
 		<div>Afternoon Tea</div>
 		<div>Snow Dragon</div>
 	</div>
