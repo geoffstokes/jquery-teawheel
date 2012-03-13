@@ -1,20 +1,23 @@
-# jQuery Wheelgame fork
+# jQuery Tea Wheel
 
-This fork is attempting to make the demo a little more functional.
+A web-app for choosing what tea to have from my roommate's extensive inventory.
 
 ## Added so far
-* Rudimentary touch support
-* A readme with text in it
 * Better colours (Not dynamic yet)
 * Text colours based on luminance of background colour (dynamically set)
 * Text size adjusts based on length of title
 * Text rotates with wheel
 * Spin button accelerates rather than setting speed
 * Adding items manually
+* Arrow shows where winning item is
+* Moved to jQuery 1.7
 
 ## Plans
-* Add more controls
+* Enhance interface controls
 * Polish design further
     * Building with intent for iPad usage
-* Add arrow indicator of where results are sourced from
-* Move to jQuery 1.7.x (Doesn't currently work correctly - spinning ignores input)
+* Add extra tea metadata on preparation and type
+	* Add a way to view and manipulate said data
+* Display tea label colours on wheel
+* Save teas to LocalStorage
+* Removing items

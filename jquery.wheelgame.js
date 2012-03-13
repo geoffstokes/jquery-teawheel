@@ -13,9 +13,9 @@ $.fn.wheelgame = function(settings) {
 		shuffle: false,
 		colors: ["#B8D430", "#3AB745", "#029990", "#3501CB", "#2E2C75", "#673A7E", "#CC0071", "#F80120", "#F35B20", "#FB9A00", "#FFCC00", "#FEF200"],
 		borderColor: 'black',
-		fps: 30,
 		font: "Helvetica Neue",
 		fontSize: 18,
+		fps: 30,
 		smoothFrames: 10,
 		update: function() {},
 		finished: function() {},
@@ -188,10 +188,6 @@ $.fn.wheelgame = function(settings) {
 		velocity -= (velocity * decayFactor * tDiff);
 		wheelAngle = (3600 + angleChange + wheelAngle) % 360;
 
-
-		$("#debugangle").text(velocity);
-
-
 		drawWheel(wheelAngle);
 		lastFrameTime = currTime;
 		if (Math.abs(velocity) > 1.0) {
@@ -225,7 +221,7 @@ $.fn.wheelgame = function(settings) {
 	};
 	
 	$(canvas).bind("touchstart", function(e) {
-		var mousePoint = new Point(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+		var mousePoint = new Point(e.originalEvent.touches[0].pageX - this.offsetLeft, e.originalEvent.touches[0].pageY - this.offsetTop);
 		var pointFromCenter = new Point(mousePoint.x - center.x, mousePoint.y - center.y);
 
 		dragging = true;
@@ -247,7 +243,7 @@ $.fn.wheelgame = function(settings) {
 		var pointFromCenter = new Point(mousePoint.x - center.x, mousePoint.y - center.y);
 		var oldAngle = dragLastAngles[dragLastAngles.length - 1];
 		var oldTime = dragLastTimes[dragLastTimes.length - 1];
-		updateDrag(pointFromCenter);
+		//updateDrag(pointFromCenter);
 		var currTime = new Date().getTime();
 		var currVelocity = (dragLastAngle - oldAngle) / ((dragLastTime - oldTime) / 1000);
 		if (Math.abs(dragLastAngle - oldAngle) > 180) {
@@ -268,7 +264,7 @@ $.fn.wheelgame = function(settings) {
 			return;
 		}
 		
-		var mousePoint = new Point(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+		var mousePoint = new Point(e.originalEvent.touches[0].pageX - this.offsetLeft, e.originalEvent.touches[0].pageY - this.offsetTop);
 		var pointFromCenter = new Point(mousePoint.x - center.x, mousePoint.y - center.y);
 
 		updateDrag(pointFromCenter);
