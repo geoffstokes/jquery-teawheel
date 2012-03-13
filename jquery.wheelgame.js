@@ -293,7 +293,7 @@ $.fn.wheelgame = function(settings) {
 		slices.push(slice);
 	});
 
-	$('#addbtn').bind("touchend",function() {
+	$('#addbtn').bind("click",function() {
 		slices.push({name: $('#addnewtext').val()});
 		if (settings.shuffle) {
 			shuffle(slices);
