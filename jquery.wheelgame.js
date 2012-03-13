@@ -257,11 +257,7 @@ $.fn.wheelgame = function(settings) {
 		if (Math.abs(currVelocity) > 1) {
 			// Start animation
 			console.log('Throwing with velocity ' + currVelocity);
-			if(ipadmode == true) {
-				velocity = -currVelocity; // Needs to be negative on touch devices. Why?
-			} else {
-				velocity = currVelocity;
-			}
+			velocity = currVelocity;
 			animating = true;
 			animateFrame();
 		}
