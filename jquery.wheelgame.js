@@ -20,6 +20,7 @@ $.fn.wheelgame = function(settings) {
 		update: function() {},
 		finished: function() {},
 		initialAngle: Math.random() * 360,
+		playaudio: false,
 	}, settings || {});
 	
 	// Point object
@@ -29,11 +30,18 @@ $.fn.wheelgame = function(settings) {
 	};
 	Point.prototype = new Object();
 	Point.prototype.constructor = Point;
-	
+
+	var ipadmode = false;
+	if (("standalone" in window.navigator) && !window.navigator.standalone){
+		// We're in iOS' app mode
+		ipadmode = true;
+		$('.controlbox-top').css("margin-top: 22px;");
+	}
+
 	// Hide parent DIV and create our canvas
 	this.hide();
 	var size = {width: this.width(), height: this.height()};
-	var center = new Point(size.width / 2, size.height / 2);
+	var center = new Point(size.width * 0.5, size.height / 2);
 	var radius = ((size.width > size.height ? size.height : size.width) / 2) * 0.9;
 	this.after('<canvas id="wheelgame_canvas" width="' + size.width + '" height="' + size.height + '"></canvas>');
 	var canvas = $('#wheelgame_canvas').get(0);
@@ -73,7 +81,7 @@ $.fn.wheelgame = function(settings) {
 		var deg = offsetDegrees || 0;
 		// Draw outer circle
 		context.beginPath();
-		context.arc(center.x, center.y, radius+1, 0, Math.PI * 2, true);
+		context.arc(center.x, center.y, radius+1.5, 0, Math.PI * 2, true);
 		context.stroke();
 		context.closePath();
 		
@@ -90,6 +98,17 @@ $.fn.wheelgame = function(settings) {
 			}
 			deg = (deg + degPerSlice) % 360;
 		}
+
+		context.fillStyle = settings.borderColor;
+		context.beginPath();
+		context.moveTo(center.x + radius * 1.1, center.y - radius * 0.1);
+		context.lineTo(center.x + radius * 0.95, center.y);
+		context.lineTo(center.x + radius * 1.1, center.y + radius * 0.1);
+		context.lineTo(center.x + radius * 1.1, center.y - radius * 0.1);
+		context.fillStyle = 'red';
+		context.stroke();
+		context.fill();
+		context.closePath();
 	};
 	
 	var drawSlice = function(slice, offsetDegrees, sizeDegrees, context, fillStyle, strokeStyle, textColor) {
@@ -121,7 +140,7 @@ $.fn.wheelgame = function(settings) {
 		var sliceCenterRads = degToRad(offsetDegrees + (sizeDegrees / 2));
 		var sliceCenterX = (radius * 0.9) * Math.cos(sliceCenterRads);
 		var sliceCenterY = (radius * 0.9) * Math.sin(sliceCenterRads);
-		context.font = settings.fontSize + "px " + settings.font;
+		context.font = "200 " + settings.fontSize + "px " + settings.font;
 		tmpfontsize = settings.fontSize;
 		context.textAlign = "right";
 		context.textBaseline = "middle";
@@ -131,7 +150,7 @@ $.fn.wheelgame = function(settings) {
 		{
 			tmpfontsize--;
 			context.font = tmpfontsize + "px " + settings.font;
-			console.log(slice.name + " - " + tmpfontsize + "px");
+			//console.log(slice.name + " - " + tmpfontsize + "px");
 		}
 		context.fillText(slice.name, 0, 0);
 
@@ -238,7 +257,11 @@ $.fn.wheelgame = function(settings) {
 		if (Math.abs(currVelocity) > 1) {
 			// Start animation
 			console.log('Throwing with velocity ' + currVelocity);
-			velocity = currVelocity; // Needs to be negative on touch devices. Why?
+			if(ipadmode == true) {
+				velocity = -currVelocity; // Needs to be negative on touch devices. Why?
+			} else {
+				velocity = currVelocity;
+			}
 			animating = true;
 			animateFrame();
 		}
@@ -270,15 +293,12 @@ $.fn.wheelgame = function(settings) {
 	var num = this.children().length;
 	this.children().each(function() {
 		var elem = this;
-		var slice = {url: null, name: $(this).text()};
-		if ($(this).find('a').length) {
-			slice.url = $(this).find('a').attr('href');
-		}
+		var slice = {name: $(this).text()};
 		slices.push(slice);
 	});
 
-	$('#addbtn').bind("mouseup touchend",function() {
-		slices.push({url: null, name: $('#addnewtext').val()});
+	$('#addbtn').bind("touchend",function() {
+		slices.push({name: $('#addnewtext').val()});
 		if (settings.shuffle) {
 			shuffle(slices);
 		}
