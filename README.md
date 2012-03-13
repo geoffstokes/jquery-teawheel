@@ -16,8 +16,7 @@ A web-app for choosing what tea to have from my roommate's extensive inventory.
 * Enhance interface controls
 * Polish design further
     * Building with intent for iPad usage
-* Add extra tea metadata on preparation and type
-	* Add a way to view and manipulate said data
+* Manipulate tea metadata
 * Display tea label colours on wheel
 * Save teas to LocalStorage
 * Removing items
