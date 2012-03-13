@@ -91,7 +91,7 @@ $.fn.wheelgame = function(settings) {
 			if ((deg == 0) || (deg + degPerSlice > 360)) {
 				// Selected!
 				if (selectedSlice != slices[i]) {
-					console.log('slices[i]='+slices[i].name+ ' (deg='+deg+' degPerSlice='+degPerSlice+')');
+					//console.log('slices[i]='+slices[i].name+ ' (deg='+deg+' degPerSlice='+degPerSlice+')');
 					selectedSlice = slices[i];
 					settings.update(selectedSlice);
 				}
@@ -224,7 +224,7 @@ $.fn.wheelgame = function(settings) {
 		}
 	};
 	
-	$(canvas).bind("mousedown touchstart", function(e) {
+	$(canvas).bind("touchstart", function(e) {
 		var mousePoint = new Point(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
 		var pointFromCenter = new Point(mousePoint.x - center.x, mousePoint.y - center.y);
 
@@ -237,13 +237,13 @@ $.fn.wheelgame = function(settings) {
 		dragAngleOffset = (360 + dragLastAngle - wheelAngle) % 360;
 	});
 	
-	$(canvas).bind("mouseup touchend",function(e) {
+	$(canvas).bind("touchend",function(e) {
 		if (!dragging) {
 			return;
 		}
 		dragging = false;
 
-		var mousePoint = new Point(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+		var mousePoint = new Point(e.originalEvent.changedTouches[0].pageX - this.offsetLeft, e.originalEvent.changedTouches[0].pageY - this.offsetTop);
 		var pointFromCenter = new Point(mousePoint.x - center.x, mousePoint.y - center.y);
 		var oldAngle = dragLastAngles[dragLastAngles.length - 1];
 		var oldTime = dragLastTimes[dragLastTimes.length - 1];
@@ -256,14 +256,14 @@ $.fn.wheelgame = function(settings) {
 		}
 		if (Math.abs(currVelocity) > 1) {
 			// Start animation
-			console.log('Throwing with velocity ' + currVelocity);
+			//console.log('Throwing with velocity ' + currVelocity + " - DragLastAngle: " + (dragLastAngle - oldAngle) + " DragLastTime: " + (dragLastTime - oldTime));
 			velocity = currVelocity;
 			animating = true;
 			animateFrame();
 		}
 	});
 	
-	$(canvas).bind("mousemove touchmove",function(e) {
+	$(canvas).bind("touchmove",function(e) {
 		if (!dragging) {
 			return;
 		}
@@ -293,7 +293,7 @@ $.fn.wheelgame = function(settings) {
 		slices.push(slice);
 	});
 
-	$('#addbtn').bind("click",function() {
+	$('#addbtn').bind("touchend",function() {
 		slices.push({name: $('#addnewtext').val()});
 		if (settings.shuffle) {
 			shuffle(slices);
