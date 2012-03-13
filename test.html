@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml"> 
 <head> 
-	<title>wheel game</title> 
+	<title>Tea Wheel</title> 
 	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
-	<script type="text/javascript" src="jquery-1.7.1.js"></script> 
+	<script type="text/javascript" src="jquery-1.4.2.js"></script> 
 	<script type="text/javascript" src="jquery.wheelgame.js"></script> 
 	<script>
 	$(document).ready(function() {
@@ -27,8 +27,8 @@
 	</script>
 	<style>
 	#container {
-		width: 400px;
-		height: 400px;
+		width: 480px;
+		height: 480px;
 	}
 	#container > div {
 		border: solid 2px blue;
@@ -38,11 +38,11 @@
 <body>
 	
 	<form onsubmit="return false;">
-		<input type="submit" name="spin" id="spinbtn" value="Spin!" />
+		<input type="submit" name="spin" id="spinbtn" value="Spin the wheel" />
 		<input type="text" name="addnewtext" id="addnewtext" width="50" value="test" />
-		<input type="submit" name="add" id="addbtn" value="Add!" /><span id="debugangle"></span>
+		<input type="submit" name="add" id="addbtn" value="Add Item" /><span id="debugangle"></span>
 	</form>
-	<p>Wheel Says: <span id="sel_value"></span></p>
+	<p>Wheel says: <span id="sel_value"></span></p>
 	
 	<div id="container" style="border-style: solid; border-width: 2px; border-color: red">
 		<div>Melbourne Breakfast</div>

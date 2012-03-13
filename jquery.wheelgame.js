@@ -8,18 +8,14 @@ if (console == undefined || console.log == undefined) {
 	};
 }
 
-$.fn.setRotation = function(degrees) {
-	degrees = parseInt(degrees);
-	// TODO: Add MSIE support?
-	return $(this).css('-webkit-transform', 'rotate('+degrees+'deg)').css('-moz-transform', 'rotate('+degrees+'deg)');
-};
-
 $.fn.wheelgame = function(settings) {
 	settings = $.extend({
 		shuffle: false,
 		colors: ["#B8D430", "#3AB745", "#029990", "#3501CB", "#2E2C75", "#673A7E", "#CC0071", "#F80120", "#F35B20", "#FB9A00", "#FFCC00", "#FEF200"],
 		borderColor: 'black',
 		fps: 30,
+		font: "Helvetica Neue",
+		fontSize: 18,
 		smoothFrames: 10,
 		update: function() {},
 		finished: function() {},
@@ -37,8 +33,7 @@ $.fn.wheelgame = function(settings) {
 	// Hide parent DIV and create our canvas
 	this.hide();
 	var size = {width: this.width(), height: this.height()};
-	var center = new Point(Math.round(size.width / 2), Math.round(size.height / 2));
-	//var center = {x: size.width / 2, y: size.height / 2};
+	var center = new Point(size.width / 2, size.height / 2);
 	var radius = ((size.width > size.height ? size.height : size.width) / 2) * 0.9;
 	this.after('<canvas id="wheelgame_canvas" width="' + size.width + '" height="' + size.height + '"></canvas>');
 	var canvas = $('#wheelgame_canvas').get(0);
@@ -72,13 +67,13 @@ $.fn.wheelgame = function(settings) {
 		canvas.width = canvas.width; // clear canvas
 		context.strokeStyle = settings.borderColor;
 		context.fillStyle = 'white';
-		context.lineWidth = 1;
+		context.lineWidth = 1.5;
 		
 		var degPerSlice = 360 / slices.length;
 		var deg = offsetDegrees || 0;
 		// Draw outer circle
 		context.beginPath();
-		context.arc(center.x, center.y, radius, 0, Math.PI * 2, true);
+		context.arc(center.x, center.y, radius+1, 0, Math.PI * 2, true);
 		context.stroke();
 		context.closePath();
 		
@@ -124,18 +119,29 @@ $.fn.wheelgame = function(settings) {
 			context.fillStyle = 'white';
 		}
 		var sliceCenterRads = degToRad(offsetDegrees + (sizeDegrees / 2));
-		var sliceCenterX = (radius * 0.7) * Math.cos(sliceCenterRads);
-		var sliceCenterY = (radius * 0.7) * Math.sin(sliceCenterRads);
+		var sliceCenterX = (radius * 0.9) * Math.cos(sliceCenterRads);
+		var sliceCenterY = (radius * 0.9) * Math.sin(sliceCenterRads);
+		context.font = settings.fontSize + "px " + settings.font;
+		tmpfontsize = settings.fontSize;
+		context.textAlign = "right";
+		context.textBaseline = "middle";
 		context.translate(center.x + sliceCenterX, center.y + sliceCenterY);
-		context.textAlign = 'center';
+		context.rotate(sliceCenterRads);
+		while(context.measureText(slice.name).width > (0.8 * radius) && tmpfontsize > 1)
+		{
+			tmpfontsize--;
+			context.font = tmpfontsize + "px " + settings.font;
+			console.log(slice.name + " - " + tmpfontsize + "px");
+		}
 		context.fillText(slice.name, 0, 0);
+
 		
 		// Reset transform (load identity)
 		context.setTransform(1, 0, 0, 1, 0, 0);
 	};
 	
 	this.spin = function(v) {
-		velocity = v || Math.random() * 600 + 400;
+		velocity += v || Math.random() * 600 + 400;
 		animating = true;
 		animateFrame();
 	};
@@ -147,7 +153,7 @@ $.fn.wheelgame = function(settings) {
 	};
 	
 	var animateFrame = function() {
-		var decayFactor = 0.99;
+		var decayFactor = 0.8;
 		var currTime = new Date().getTime();
 		if (!animating) {
 			return;
@@ -232,7 +238,7 @@ $.fn.wheelgame = function(settings) {
 		if (Math.abs(currVelocity) > 1) {
 			// Start animation
 			console.log('Throwing with velocity ' + currVelocity);
-			velocity = -currVelocity; // Needs to be negative on touch devices. Why?
+			velocity = currVelocity; // Needs to be negative on touch devices. Why?
 			animating = true;
 			animateFrame();
 		}
@@ -270,7 +276,6 @@ $.fn.wheelgame = function(settings) {
 		}
 		slices.push(slice);
 	});
-
 
 	$('#addbtn').bind("mouseup touchend",function() {
 		slices.push({url: null, name: $('#addnewtext').val()});
