@@ -34,7 +34,7 @@ $.fn.wheelgame = function(settings) {
 	if (("standalone" in window.navigator) && !window.navigator.standalone){
 		// We're in iOS' app mode
 		ipadmode = true;
-		$('.controlbox-top').css("margin-top: 22px;");
+		$('.app-sidebar').css("margin-top: 22px;");
 	}
 
 	// Hide parent DIV and create our canvas

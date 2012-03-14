@@ -8,10 +8,12 @@ html,body {
 	-webkit-font-smoothing: antialiased;
 }
 
-input[type=submit] {
+input[type=submit], a.button {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 12pt;
 	margin: 7px;
+	padding-top: 0;
+	padding-bottom: 0;
 	box-shadow: 0 1px 1px #9aa5bb, 0 -1px 1px #8e96a5;
 	text-shadow 0 -1px 0 rgba(255,255,255,128);
 	border: solid 1px #54617D;
@@ -43,28 +45,22 @@ input[type=submit] {
 	overflow: auto;
 }
 
-.controlbox {
-	width: 32%;
-}
-
-.controlbox-top {
+.app-sidebar {
 	float: left;
+	width: 32%;
 	top: 0px;
 	bottom: 0px;
 }
 
-.controlbox-bottom {
+.app-infopanel {
+	width: 32%;
 	position: fixed;
 	bottom: 0;
 }
 
-#container {
+#tea-container {
 	width: 65%;
 	height: 100%;
-}
-
-#container > div {
-	border: solid 2px blue;
 }
 
 #wheelgame_canvas {

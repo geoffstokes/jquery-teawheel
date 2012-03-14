@@ -9,7 +9,7 @@
 	<meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
 	<script>
 		$(document).ready(function() {
-			var wheelgame = $('#container').wheelgame({
+			var wheelgame = $('#tea-container').wheelgame({
 				shuffle: true,
 				update: function(slice) {
 					$('#sel_name').text(slice.name);
@@ -46,7 +46,7 @@
 		</form>
 	</div>
 	<div class="app-content">
-		<div class="controlbox controlbox-top">
+		<div class="app-sidebar">
 			<div id="selectedvalue">
 				<h3><strong><span id="sel_name"></span></strong> <span id="sel_teakind"></span></h3>
 				<p><strong>Description:</strong> <span id="sel_description"></span></p>
@@ -54,7 +54,7 @@
 			</div>
 		</div>
 		
-		<div id="container" style="border-style: solid; border-width: 2px; border-color: red">
+		<div id="tea-container" style="border-style: solid; border-width: 2px; border-color: red">
 			<div>
 				<name>Melbourne Breakfast</name>
 				<kind>Black Tea</kind>
@@ -129,7 +129,7 @@
 			</div>
 		</div>
 
-		<div class="controlbox controlbox-bottom">
+		<div class="app-infopanel">
 			<p>By Geoff Stokes - <a href="https://github.com/ticky/jquery-teawheel">View on Github</a></p>
 			<form onsubmit="return false;">
 				<input type="text" name="addnewtext" id="addnewtext" width="50" value="test" />
