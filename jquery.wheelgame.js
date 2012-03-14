@@ -299,6 +299,22 @@ $.fn.wheelgame = function(settings) {
 	if (settings.shuffle) {
 		shuffle(slices);
 	}
+
+	// Detect orientation change. Need to use this to update layout/orientation for canvas (will need to be re-initialised)
+	$('body').on("orientationchange", function() {
+	    if ( window.orientation == 0 ) {  
+	     alert ('Portrait Mode, Home Button bottom');  
+	    }  
+	    else if ( window.orientation == 90 ) {  
+	     alert ('Landscape Mode, Home Button right');  
+	    }  
+	    else if ( window.orientation == -90 ) {  
+	     alert ('Landscape Mode, Home Button left');  
+	    }  
+	    else if ( window.orientation == 180 ) {  
+	     alert ('Portrait Mode, Home Button top');  
+	    }
+	 });
 	
 	drawWheel(settings.initialAngle);
 	return this;
