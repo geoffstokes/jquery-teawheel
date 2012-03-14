@@ -14,8 +14,10 @@ A web-app for choosing what tea to have from my roommate's extensive inventory.
 
 ## Plans
 * Enhance interface controls
+    * Retina display support
 * Polish design further
-    * Building with intent for iPad usage
+    * Building with primary intent for iPad & smartphone usage
+    * Responsive CSS layout with support for landscape and portrait orientations
 * Manipulate tea metadata
 * Display tea label colours on wheel
 * Save teas to LocalStorage
