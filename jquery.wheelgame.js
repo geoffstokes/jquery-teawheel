@@ -269,6 +269,7 @@ $.fn.wheelgame = function(settings) {
 		updateDrag(pointFromCenter);
 		wheelAngle = (360 + dragLastAngle - dragAngleOffset) % 360;
 		drawWheel(wheelAngle);
+		e.preventDefault();
 	});
 	
 	var shuffle = function(arr) {
@@ -288,7 +289,7 @@ $.fn.wheelgame = function(settings) {
 		slices.push(slice);
 	});
 
-	$('#addbtn').on("touchend",function() {
+	$('#addbtn').on("click",function() {
 		slices.push({name: $('#addnewtext').val()});
 		if (settings.shuffle) {
 			shuffle(slices);
@@ -299,6 +300,19 @@ $.fn.wheelgame = function(settings) {
 	if (settings.shuffle) {
 		shuffle(slices);
 	}
+
+	// Detect orientation change. Need to use this to update layout/orientation for canvas (will need to be re-initialised)
+	/*$('body').on("orientationchange", function() {
+		if ( window.orientation == 0 || window.orientation == 180 ) {  
+			alert ('Portrait Mode');  
+		}  
+		else if ( window.orientation == 90 || window.orientation == -90 ) {  
+			alert ('Landscape Mode');  
+		}
+		else {
+			alert ('Orientation Data Not Found');
+		}
+	 });*/
 	
 	drawWheel(settings.initialAngle);
 	return this;
