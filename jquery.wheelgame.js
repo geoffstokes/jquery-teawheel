@@ -302,7 +302,7 @@ $.fn.wheelgame = function(settings) {
 	}
 
 	// Detect orientation change. Need to use this to update layout/orientation for canvas (will need to be re-initialised)
-	$('body').on("orientationchange", function() {
+	/*$('body').on("orientationchange", function() {
 		if ( window.orientation == 0 || window.orientation == 180 ) {  
 			alert ('Portrait Mode');  
 		}  
@@ -312,7 +312,7 @@ $.fn.wheelgame = function(settings) {
 		else {
 			alert ('Orientation Data Not Found');
 		}
-	 });
+	 });*/
 	
 	drawWheel(settings.initialAngle);
 	return this;
