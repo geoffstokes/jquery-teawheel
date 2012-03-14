@@ -1,30 +1,65 @@
-body {
+html,body {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	margin: 0;
 	padding: 0;
+	height: 100%;
+	overflow: hidden;
 	background-color: #cacaca;
+	-webkit-font-smoothing: antialiased;
 }
 
 input[type=submit] {
-	font-family: inherit;
-	font-size: inherit;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12pt;
+	margin: 7px;
+	box-shadow: 0 1px 1px #9aa5bb, 0 -1px 1px #8e96a5;
+	text-shadow 0 -1px 0 rgba(255,255,255,128);
+	border: solid 1px #54617D;
+	border-color: #484E59 #54617D #4C5C7A #54617D;
+	font-size: 12px;
+	line-height: 28px;
+	border-radius: 5px;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#92A1BF), color-stop(0.25, #798AAD), color-stop(0.5, #6276A0), color-stop(0.5, #556A97), color-stop(0.75, #566C98), to(#546993));
+	color: white;
+}
+
+.app-toolbar {
+	height: 45px;
+	border-bottom: 1px solid #838A9A;
+	background-color: #424242;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#F1F2F5), color-stop(0.4, #D7DAE0), to(#9498A8));
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	position: relative;
+	padding-top: 1px;
+}
+
+.app-content {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 47px;
+	bottom: 0;
+	overflow: auto;
 }
 
 .controlbox {
-	position: fixed;
-	left: 0;
+	width: 32%;
 }
 
 .controlbox-top {
-	/*top: 22px;*/
+	float: left;
+	top: 0px;
+	bottom: 0px;
 }
 
 .controlbox-bottom {
+	position: fixed;
 	bottom: 0;
 }
 
 #container {
-	width: 700px;
+	width: 65%;
 	height: 100%;
 }
 
@@ -33,19 +68,20 @@ input[type=submit] {
 }
 
 #wheelgame_canvas {
-	float: right;
-	display: block;
+	float: left;
+	display: inline-block;
 }
 
 #selectedvalue {
-	width: 300px;
 	padding-left: 1em;
-	border: 1px black solid;
-	border-top-right-radius: 1em;
+	border-right: 1px black solid;
 	border-bottom-right-radius: 1em;
 	border-left: none;
 	background-color: white;
 	padding-right: 1em;
+	height: 100%;
+	display: block;
+	overflow: scroll;
 }
 
 #selectedvalue p {

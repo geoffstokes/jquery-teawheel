@@ -269,6 +269,7 @@ $.fn.wheelgame = function(settings) {
 		updateDrag(pointFromCenter);
 		wheelAngle = (360 + dragLastAngle - dragAngleOffset) % 360;
 		drawWheel(wheelAngle);
+		e.preventDefault();
 	});
 	
 	var shuffle = function(arr) {
@@ -288,7 +289,7 @@ $.fn.wheelgame = function(settings) {
 		slices.push(slice);
 	});
 
-	$('#addbtn').on("touchend",function() {
+	$('#addbtn').on("click",function() {
 		slices.push({name: $('#addnewtext').val()});
 		if (settings.shuffle) {
 			shuffle(slices);
