@@ -45,12 +45,58 @@ input[type=submit], a.button {
 	overflow: auto;
 }
 
-.app-sidebar {
-	float: left;
-	width: 32%;
-	top: 0px;
-	bottom: 0px;
+@media only screen and (orientation: landscape) {
+	/* rules for landscape orientation */
+	.app-sidebar {
+		float: left;
+		width: 32%;
+		top: 0px;
+		bottom: 0px;
+	}
+
+	#tea-container {
+		width: 65%;
+		height: 100%;
+	}
+
+	#wheelgame_canvas {
+		float: left;
+		display: inline-block;
+	}
+
+	#selectedvalue {
+		border-right: 1px black solid;
+		border-bottom: none;
+	}
 }
+}
+
+@media only screen and (orientation: portrait) {
+	/* rules for landscape orientation */
+	.app-sidebar {
+		float: none;
+		width: 100%;
+		top: 0px;
+		bottom: 0px;
+		height: 33%;
+	}
+
+	#tea-container {
+		width: 100%;
+		height: 66%;
+	}
+
+	#wheelgame_canvas {
+		float: none;
+		display: inline-block;
+	}
+
+	#selectedvalue {
+		border-right: none;
+		border-bottom: 1px black solid;
+	}
+}
+
 
 .app-infopanel {
 	width: 32%;
@@ -58,21 +104,8 @@ input[type=submit], a.button {
 	bottom: 0;
 }
 
-#tea-container {
-	width: 65%;
-	height: 100%;
-}
-
-#wheelgame_canvas {
-	float: left;
-	display: inline-block;
-}
-
 #selectedvalue {
 	padding-left: 1em;
-	border-right: 1px black solid;
-	border-bottom-right-radius: 1em;
-	border-left: none;
 	background-color: white;
 	padding-right: 1em;
 	height: 100%;
